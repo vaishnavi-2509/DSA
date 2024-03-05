@@ -17,41 +17,32 @@ char** split_string(char*);
 int parse_int(char*);
 
 /*
- * Complete the 'diagonalDifference' function below.
+ * Complete the 'birthday' function below.
  *
  * The function is expected to return an INTEGER.
- * The function accepts 2D_INTEGER_ARRAY arr as parameter.
+ * The function accepts following parameters:
+ *  1. INTEGER_ARRAY s
+ *  2. INTEGER d
+ *  3. INTEGER m
  */
 
-int diagonalDifference(int arr_rows, int arr_columns, int** arr) 
+int birthday(int s_count, int* s, int d, int m) {
+int count=0,sum=0; 
+for(int i=0;i<=s_count-m;i++)
 {
-  int sum=0,sum1=0;
-  // int y=0;
-  int x;
-  for(int i=0;i<arr_rows;i++)
-   {
-     for(int j=0;j<arr_columns;j++)
-      {
-         if(arr[i]==arr[j])
-         {
-            sum=sum+arr[i][j];
-         }
-         
-         
-               
-         
-       }
-    }
-     for(int i=0;i<arr_rows;i++)
+    sum=0;
+  for(int j=i;j<i+m;j++)
+  {
+     sum=sum+s[j];
+  }
+  if(sum==d)
      {
-    sum1 = sum1 + arr[i][arr_rows - i - 1];
+         count++;
      }
-    x=sum-sum1;
- return abs(x);   
 }
 
-//printf("%d",sum);
-
+return count;
+}
 
 int main()
 {
@@ -59,21 +50,23 @@ int main()
 
     int n = parse_int(ltrim(rtrim(readline())));
 
-    int** arr = malloc(n * sizeof(int*));
+    char** s_temp = split_string(rtrim(readline()));
+
+    int* s = malloc(n * sizeof(int));
 
     for (int i = 0; i < n; i++) {
-        *(arr + i) = malloc(n * (sizeof(int)));
+        int s_item = parse_int(*(s_temp + i));
 
-        char** arr_item_temp = split_string(rtrim(readline()));
-
-        for (int j = 0; j < n; j++) {
-            int arr_item = parse_int(*(arr_item_temp + j));
-
-            *(*(arr + i) + j) = arr_item;
-        }
+        *(s + i) = s_item;
     }
 
-    int result = diagonalDifference(n, n, arr);
+    char** first_multiple_input = split_string(rtrim(readline()));
+
+    int d = parse_int(*(first_multiple_input + 0));
+
+    int m = parse_int(*(first_multiple_input + 1));
+
+    int result = birthday(n, s, d, m);
 
     fprintf(fptr, "%d\n", result);
 

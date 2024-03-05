@@ -17,65 +17,99 @@ char** split_string(char*);
 int parse_int(char*);
 
 /*
- * Complete the 'diagonalDifference' function below.
+ * Complete the 'compareTriplets' function below.
  *
- * The function is expected to return an INTEGER.
- * The function accepts 2D_INTEGER_ARRAY arr as parameter.
+ * The function is expected to return an INTEGER_ARRAY.
+ * The function accepts following parameters:
+ *  1. INTEGER_ARRAY a
+ *  2. INTEGER_ARRAY b
  */
 
-int diagonalDifference(int arr_rows, int arr_columns, int** arr) 
+/*
+ * To return the integer array from the function, you should:
+ *     - Store the size of the array to be returned in the result_count variable
+ *     - Allocate the array statically or dynamically
+ *
+ * For example,
+ * int* return_integer_array_using_static_allocation(int* result_count) {
+ *     *result_count = 5;
+ *
+ *     static int a[5] = {1, 2, 3, 4, 5};
+ *
+ *     return a;
+ * }
+ *
+ * int* return_integer_array_using_dynamic_allocation(int* result_count) {
+ *     *result_count = 5;
+ *
+ *     int *a = malloc(5 * sizeof(int));
+ *
+ *     for (int i = 0; i < 5; i++) {
+ *         *(a + i) = i + 1;
+ *     }
+ *
+ *     return a;
+ * }
+ *
+ */
+int* compareTriplets(int a_count, int* a, int b_count, int* b, int* result_count) {
+int i;
+int a_c=0,b_c=0;
+for(i=0;i<a_count;i++)
 {
-  int sum=0,sum1=0;
-  // int y=0;
-  int x;
-  for(int i=0;i<arr_rows;i++)
-   {
-     for(int j=0;j<arr_columns;j++)
-      {
-         if(arr[i]==arr[j])
-         {
-            sum=sum+arr[i][j];
-         }
-         
-         
-               
-         
-       }
+    if(a[i]>b[i])
+    {
+        a_c++;
     }
-     for(int i=0;i<arr_rows;i++)
-     {
-    sum1 = sum1 + arr[i][arr_rows - i - 1];
-     }
-    x=sum-sum1;
- return abs(x);   
+    else if(a[i]<b[i])
+    {
+        b_c++;
+    }
+    
 }
 
-//printf("%d",sum);
+result_count[0]=a_c;
+result_count[1]=b_c;
 
+return result_count;
+}
 
 int main()
 {
     FILE* fptr = fopen(getenv("OUTPUT_PATH"), "w");
 
-    int n = parse_int(ltrim(rtrim(readline())));
+    char** a_temp = split_string(rtrim(readline()));
 
-    int** arr = malloc(n * sizeof(int*));
+    int* a = malloc(3 * sizeof(int));
 
-    for (int i = 0; i < n; i++) {
-        *(arr + i) = malloc(n * (sizeof(int)));
+    for (int i = 0; i < 3; i++) {
+        int a_item = parse_int(*(a_temp + i));
 
-        char** arr_item_temp = split_string(rtrim(readline()));
+        *(a + i) = a_item;
+    }
 
-        for (int j = 0; j < n; j++) {
-            int arr_item = parse_int(*(arr_item_temp + j));
+    char** b_temp = split_string(rtrim(readline()));
 
-            *(*(arr + i) + j) = arr_item;
+    int* b = malloc(3 * sizeof(int));
+
+    for (int i = 0; i < 3; i++) {
+        int b_item = parse_int(*(b_temp + i));
+
+        *(b + i) = b_item;
+    }
+
+    int result_count;
+    int* result = compareTriplets(3, a, 3, b, &result_count);
+  
+    for (int i = 0; i < 2; i++) {
+        fprintf(fptr, "%d", *(result + i));
+
+        if (i != 2- 1) {
+            fprintf(fptr, " ");
         }
     }
 
-    int result = diagonalDifference(n, n, arr);
-
-    fprintf(fptr, "%d\n", result);
+    fprintf(fptr, "\n");
 
     fclose(fptr);
 
