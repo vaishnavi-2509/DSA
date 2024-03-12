@@ -17,67 +17,52 @@ char** split_string(char*);
 int parse_int(char*);
 
 /*
- * Complete the 'sockMerchant' function below.
+ * Complete the 'bonAppetit' function below.
  *
- * The function is expected to return an INTEGER.
  * The function accepts following parameters:
- *  1. INTEGER n
- *  2. INTEGER_ARRAY ar
+ *  1. INTEGER_ARRAY bill
+ *  2. INTEGER k
+ *  3. INTEGER b
  */
 
-int sockMerchant(int n, int ar_count, int* ar) {
-    
-    int temp=0;
-    for(int i=0;i<n-1;i++)
-    {
-        for(int j=0;j<n-i-1;j++)
-        {
-            if(ar[j]>ar[j+1])
-            {
-                temp=ar[j];
-                ar[j]=ar[j+1];
-                ar[j+1]=temp;
-            }
-        }
-    }
- int count=0;
- ar_count=0;
- for (int i=0; i<n;)
-    {
-        count=1;
-        while(ar[i]==ar[i+1])
-        {
-            count++;
-            i++;
-        }
-        i++;
-        count=count/2;
-        ar_count=ar_count+count;
-    }
- return ar_count;
+void bonAppetit(int bill_count, int* bill, int k, int b) {
+int sum=0;
+for(int i=0;i<bill_count;i++)
+{
+  sum=sum+bill[i];  
 }
-
+sum=sum-bill[k];
+sum=sum/2;
+ if(b==sum)
+ {
+   printf("Bon Appetit")  ;
+ }
+ else {
+    printf("%d",b-sum);
+    
+ }
+}
 int main()
 {
-    FILE* fptr = fopen(getenv("OUTPUT_PATH"), "w");
+    char** first_multiple_input = split_string(rtrim(readline()));
 
-    int n = parse_int(ltrim(rtrim(readline())));
+    int n = parse_int(*(first_multiple_input + 0));
 
-    char** ar_temp = split_string(rtrim(readline()));
+    int k = parse_int(*(first_multiple_input + 1));
 
-    int* ar = malloc(n * sizeof(int));
+    char** bill_temp = split_string(rtrim(readline()));
+
+    int* bill = malloc(n * sizeof(int));
 
     for (int i = 0; i < n; i++) {
-        int ar_item = parse_int(*(ar_temp + i));
+        int bill_item = parse_int(*(bill_temp + i));
 
-        *(ar + i) = ar_item;
+        *(bill + i) = bill_item;
     }
 
-    int result = sockMerchant(n, n, ar);
+    int b = parse_int(ltrim(rtrim(readline())));
 
-    fprintf(fptr, "%d\n", result);
-
-    fclose(fptr);
+    bonAppetit(n, bill, k, b);
 
     return 0;
 }
