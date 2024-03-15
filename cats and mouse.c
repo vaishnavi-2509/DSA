@@ -23,12 +23,12 @@ char** split_string(char*);
 // return str;
 //
 char* catAndMouse(int x, int y, int z) {
- 
-if(z-y<z-x)
+
+if(abs(z-y)<abs(z-x))
 {
-   return "Cat B";
+    return "Cat B";
 }
-else if(z-y>z-x)
+else if(abs(z-y)>abs(z-x))
 {
    return "Cat A";
 }
@@ -73,6 +73,7 @@ int main()
         char* result = catAndMouse(x, y, z);
 
         fprintf(fptr, "%s\n", result);
+        
     }
 
     fclose(fptr);
