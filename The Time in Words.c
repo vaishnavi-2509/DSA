@@ -45,14 +45,90 @@ int parse_int(char*);
  */
 char* timeInWords(int h, int m)
 {
+    char* str = malloc(100 * sizeof(char));
+ 
     
-char count[30][100]={"one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eightee","nineteen","twenty","twenty-one","twenty-two","twenty-three","twenty-four","twenty-five","twenty-six","twenty-seven","twenty-eight","twenty-nine"};
+char count[30][100]={"one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eightee","nineteen","twenty","twenty one","twenty two","twenty three","twenty four","twenty five","twenty six","twenty seven","twenty eight","twenty nine"};
 if(m==0)
 {
-    // printf("%s o'clock",count[h-1]);
-    
+   strcpy(str, count[h - 1]);
+        strcat(str, " o' clock");  
+        return str;
 }
-   return 0; 
+else if(m>30)
+{
+    if(m==35)
+    {
+        strcpy(str,count[60-m-1]);
+        strcat(str," minutes to ");
+        strcat(str,count[h]);
+        return str;
+    }
+    else if(m==40)
+    {
+           strcpy(str, count[60-m-1]);
+           strcat( str," minutes to ");  
+           strcat(str,count[h]);
+        return str;
+    }
+    else if(m==45)
+    {
+        strcpy(str,"quarter to ");
+        strcat(str,count[h]);   
+        return str;
+    }
+    else if(m==47)
+    {
+        strcpy(str,count[60-m-1]);
+        strcat(str," minutes to ");
+        strcat(str,count[h]);
+        return str;
+    }
+    else if(m==57)
+    {
+        strcpy(str,count[60-m-1]);
+        strcat(str," minutes to ");
+        strcat(str,count[h]);
+        return str;
+    }
+}
+else
+{
+    if(m==1)
+    {
+        strcpy(str,count[m-1]);
+        strcat(str," minute past ");
+        strcat(str,count[h-1]);
+        return str;
+    }
+    else if(m==10)
+    {
+        strcpy(str,count[m-1]);
+        strcat(str," minutes past ");
+        strcat(str,count[h-1]);
+        return str;
+    }
+    else if(m==15)
+    {
+        strcpy(str,"quarter past ");
+        strcat(str,count[h-1]);
+        return str;
+    }
+    else if(m==29)
+    {
+        strcpy(str,count[m-1]);
+        strcat(str," minutes past ");
+        strcat(str,count[h-1]);
+        return str;
+    }
+    else if(m==30)
+    {
+      strcpy(str,"half past ");
+        strcat(str,count[h-1]);
+        return str;  
+    }
+}
+   return NULL;
 }
 
 int main()
