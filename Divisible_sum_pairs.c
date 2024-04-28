@@ -28,18 +28,18 @@ int parse_int(char*);
 
 int divisibleSumPairs(int n, int k, int ar_count, int* ar) {
 int count=0;
-for(int i=0;i<n;i++)
+for(int i=0;i<ar_count-1;i++)
 {
-    for(int j=0;j<n;j++)
+    for(int j=i+1;j<ar_count;j++)
     {
-        if(((ar[i]+ar[j+1])%k)==0)
+        if(((ar[i]+ar[j])%k)==0)
         {
             count++;
         }
     }
 }
 
-return ar_count;
+return count;
 }
 
 int main()
